@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+
+  endpoints Endpoint[]
+  refreshToken RefreshToken[]
+}
+
+model Endpoint {
+  id   Int  @id @default(autoincrement())
+  url  String
+  secret String
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  events Event[]
+}
+
+model Event{
+  id  Int  @id @default(autoincrement())
+  type String
+  payload Json
+  status String
+
+  endpointId Int
+  endpoint Endpoint @relation(fields:[endpointId], references:[id])
+  deliveryLog DeliveryLog[]
+}
+
+model DeliveryLog{
+  id Int @id @default(autoincrement())
+  status String
+  attempt Int
+  eventId Int
+  event Event @relation(fields:[eventId],references:[id])
+ 
+}
+
+model RefreshToken{
+  id Int  @id @default(autoincrement())
+  token String
+  userId Int
+  user User @relation(fields:[userId],references:[id])
+}
