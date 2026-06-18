@@ -2,6 +2,8 @@ const express=require('express')
 const cors= require('cors')
 const app= express()
 require('dotenv').config()
+const {register,login,refresh, logout}= require('./controllers/auth')
+const authMiddleware= require('./middleware/auth')
 
 //parse json
 app.use(express.json())
@@ -14,6 +16,20 @@ app.get('/',(req,res)=>{
 app.get('/health',(req,res)=> {
 	res.status(200). json({status:"ok"})
 })
+//auth routes
+app.post('/auth/register',register)
+app.post('/auth/login',login)
+app.post('/auth/refresh',refresh)
+app.post('/auth/logout', logout)
+
+//protected routes 
+app.get('/protected',authMiddleware,(req,res)=>{
+	res.status(200).json({
+		message:'yay youre authenticated queen',
+		user:req.user
+	})
+})
+
 app.use((req,res)=>{
 	res.status(404).json({error:"ROUTE NOT FOUND"})
 })

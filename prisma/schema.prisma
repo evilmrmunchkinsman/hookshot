@@ -47,9 +47,12 @@ model DeliveryLog{
  
 }
 
-model RefreshToken{
-  id Int  @id @default(autoincrement())
-  token String
-  userId Int
-  user User @relation(fields:[userId],references:[id])
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
