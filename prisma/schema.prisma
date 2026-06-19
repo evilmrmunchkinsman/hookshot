@@ -15,36 +15,45 @@ model User {
 
   endpoints Endpoint[]
   refreshToken RefreshToken[]
+  events     Event[]
+
 }
 
 model Endpoint {
   id   Int  @id @default(autoincrement())
   url  String
   secret String
-
+  name  String?
   userId Int
+  createdAt DateTime @default(now())   
+  updatedAt DateTime @updatedAt        
   user User @relation(fields: [userId], references: [id])
   events Event[]
 }
 
-model Event{
-  id  Int  @id @default(autoincrement())
-  type String
-  payload Json
-  status String
-
-  endpointId Int
-  endpoint Endpoint @relation(fields:[endpointId], references:[id])
-  deliveryLog DeliveryLog[]
+model Event {
+  id           Int          @id @default(autoincrement())
+  type         String
+  payload      Json
+  status       String       @default("pending")
+  userId       Int
+  endpointId   Int?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  user         User         @relation(fields: [userId], references: [id])
+  endpoint     Endpoint?    @relation(fields: [endpointId], references: [id])
+  deliveryLogs DeliveryLog[]
 }
 
-model DeliveryLog{
-  id Int @id @default(autoincrement())
-  status String
-  attempt Int
-  eventId Int
-  event Event @relation(fields:[eventId],references:[id])
- 
+model DeliveryLog {
+  id           Int      @id @default(autoincrement())
+  status       String
+  attempt      Int
+  responseCode Int?
+  errorMessage String?
+  eventId      Int
+  createdAt    DateTime @default(now())
+  event        Event    @relation(fields: [eventId], references: [id])
 }
 
 model RefreshToken {
