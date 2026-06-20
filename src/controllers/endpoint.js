@@ -78,6 +78,7 @@ const getEndpointById = async (req, res) => {
                 id: true,
                 url: true,
                 name: true,
+                userId:true,
                 createdAt: true,
                 updatedAt: true
             }

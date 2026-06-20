@@ -5,6 +5,7 @@ require('dotenv').config()
 const {register,login,refresh, logout}= require('./controllers/auth')
 const authMiddleware= require('./middleware/auth')
 const {createEndpoint,getEndpoint,getEndpointById,deleteEndpoint}=require('./controllers/endpoint')
+const { createEvent, getEvent, getEventById } = require('./controllers/event')
 //parse json
 app.use(express.json())
 app.use(cors())
@@ -34,9 +35,12 @@ app.get('/protected',authMiddleware,(req,res)=>{
 app.post('/endpoints',authMiddleware,createEndpoint)
 app.get('/endpoints',authMiddleware,getEndpoint)
 app.get('/endpoints/:id',authMiddleware,getEndpointById)
-app.delete('/endpoints',authMiddleware,deleteEndpoint)
+app.delete('/endpoints/:id',authMiddleware,deleteEndpoint)
 
-
+//events
+app.post('/events', authMiddleware, createEvent)
+app.get('/events', authMiddleware, getEvent)
+app.get('/events/:id', authMiddleware, getEventById)
 app.use((req,res)=>{
 	res.status(404).json({error:"ROUTE NOT FOUND"})
 })
