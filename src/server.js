@@ -12,7 +12,9 @@ async function startServer(){
 			app.listen(PORT,()=>{
 				console.log(`server is running on:${PORT}`)
 				console.log(`health check: http://localhost:${PORT}/health`)
+				require('./workers/delivery.worker')
 			})
+			
 
 	} catch(error){
 		console.log('failed to start the server',error.message);
