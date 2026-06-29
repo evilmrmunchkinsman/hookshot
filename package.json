@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/server.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "dev": "nodemon src/server.js"
+    
   },
   "keywords": [],
   "author": "",
@@ -22,14 +25,14 @@
     "express": "^5.2.1",
     "express-rate-limit": "^8.5.2",
     "ioredis": "^5.11.1",
-    "jest": "^30.4.2",
     "joi": "^18.2.1",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.21.0",
-    "prisma": "^5.22.0",
-    "supertest": "^7.2.2"
+    "prisma": "^5.22.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "jest": "^30.4.2",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.2.2"
   }
 }
