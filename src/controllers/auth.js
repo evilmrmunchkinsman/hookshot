@@ -56,6 +56,8 @@ const register = async (req, res) => {
 // Login
 const login = async (req, res) => {
     try {
+        console.log('JWT_SECRET exists?', !!process.env.JWT_SECRET)
+        console.log('JWT_REFRESH_SECRET exists?', !!process.env.JWT_REFRESH_SECRET)
         const { error, value } = loginSchema.validate(req.body)
         if (error) {
             return res.status(400).json({ error: error.details[0].message })
