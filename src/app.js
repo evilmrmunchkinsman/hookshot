@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const app = express()
-require('dotenv').config()
+
 
 const { register, login, refresh, logout } = require('./controllers/auth')
 const authMiddleware = require('./middleware/auth')

@@ -5,17 +5,17 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
+    "build": "prisma generate",
+    "dev": "nodemon src/server.js",
     "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "dev": "nodemon src/server.js"
-    
+    "test:watch": "jest --watch"
+   
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^5.22.0",
     "axios": "^1.18.0",
     "bcrypt": "^6.0.0",
